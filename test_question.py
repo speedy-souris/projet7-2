@@ -6,9 +6,27 @@ from question import Question
 class TestQuestion:
     def setup_method(self):
         self.user_question_bonjour = Question('bonjour')
+        self.user_question_empty = Question('')
+        self.user_question_openClassrooms =\
+            Question('ou se trouve openClassrooms ?')
 
     def test_establishing_user_incivility_data(self):
         question_1 = self.user_question_bonjour
+        expected_result = False
+        result = question_1.establishing_user_incivility_data()
+        assert expected_result == result
+
+        question_1 = self.user_question_empty
+        expected_result = True
+        result = question_1.establishing_user_incivility_data()
+        assert expected_result == result
+
+        question_1 = self.user_question_openClassrooms
+        expected_result = True
+        result = question_1.establishing_user_incivility_data()
+        assert expected_result == result
+
+        question_1 = Question('Bonjour Grandpy')
         expected_result = False
         result = question_1.establishing_user_incivility_data()
         assert expected_result == result
