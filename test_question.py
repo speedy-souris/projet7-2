@@ -52,8 +52,14 @@ class TestQuestion:
         expected_result = True
         result = question_1.establishing_user_incomprehension_data()
         assert expected_result == result
-        
+
         question_1 = self.user_question_bonjour
         expected_result = False
         result = question_1.establishing_user_incomprehension_data()
+        assert expected_result == result
+
+    def test_parse_user_data(self):
+        question_1 = self.user_question_openClassrooms
+        expected_result = 'openclassrooms'
+        result = question_1.parse_user_data()
         assert expected_result == result
