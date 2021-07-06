@@ -122,3 +122,16 @@ class Question:
             return True
         else:
             return False
+
+    def parse_user_data(self):
+        """function that cuts the string of characters (question asked to GrandPy)
+            into a word SET_DATA then delete all unnecessary words to keep only
+            the keywords for the search"""
+        # SET_DATA of words to remove in questions
+        SET_DATA_question = self.question_asked_by_user.split()
+        result = [
+            w for w in SET_DATA_question\
+            if w.lower() not in self.UNNECESSARY_SET_DATA\
+        ]
+        modified_message = ' '.join(result)
+        return modified_message
