@@ -36,3 +36,13 @@ class TestQuestion:
         expected_result = True
         result = question_1.establishing_user_indecency_data()
         assert expected_result == result
+
+        question_1 = self.user_question_empty
+        expected_result = False
+        result = question_1.establishing_user_indecency_data()
+        assert expected_result == result
+
+        question_1 = Question('Bonjour')
+        expected_result = False
+        result = question_1.establishing_user_indecency_data()
+        assert expected_result == result
