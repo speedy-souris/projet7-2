@@ -30,3 +30,9 @@ class TestQuestion:
         expected_result = False
         result = question_1.establishing_user_incivility_data()
         assert expected_result == result
+
+    def test_establishing_user_indecency_data(self):
+        question_1 = Question('vieille baderne')
+        expected_result = True
+        result = question_1.establishing_user_indecency_data()
+        assert expected_result == result
