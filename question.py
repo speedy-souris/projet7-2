@@ -3,7 +3,7 @@
 """user question management module"""
 
 class Question:
-    """organization of the user's question"""
+    """class for the organization of the user's question"""
     # Data for check civility
     CIVILITY_SET_DATA = set(
         [
