@@ -1,11 +1,11 @@
 #coding:utf-8
 #!/usr/bin/env python
 
-import grandpyRobot
+from grandpyRobot import GrandpyRobot
 
 class TestGrandpyRobot:
     def setup_method(self):
-        self.grandpy = grandpyRobot.GrandpyRobot()
+        self.grandpy = GrandpyRobot()
 
     def test_grandpy_data_message(self):
         expected_response_result = "Bonjour Mon petit, en quoi puis-je t'aider ?"
