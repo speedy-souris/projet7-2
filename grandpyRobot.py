@@ -1,10 +1,11 @@
 #coding:utf-8
 #!/usr/bin/env python
 """grandpyRobot management module"""
+
 from frozendict import frozendict
 
 class GrandpyRobot:
-     """class for the organization of grandpyRobot according to user behavior"""
+    """class for the organization of grandpyRobot according to user behavior"""
 
     @staticmethod
     def grandpy_data_of_message(key_data):
