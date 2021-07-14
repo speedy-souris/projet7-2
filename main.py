@@ -5,12 +5,20 @@
 from grandpyRobot import GrandpyRobot
 from question import Question
 
-def user_behavior(user_question):
-    user = Question(user_question)
-    return user.establishing_user_incivility_data()
+class GeneralBehavior:
+    def __init__(self, user_question):
+        self.user_question = user_question
+        self.grandpy = GrandpyRobot()
+        self.user_incivility = None
+        self.number_user_incivility = 0
 
-# Main script
-def main(user_question):
-    grandpy = GrandpyRobot()
-    grandpy.grandpy_data_of_message('home')
-    return user_behavior(user_question)
+    def user_behavior(self):
+        user = Question(self.user_question)
+        self.user_incivility = user.establishing_user_incivility_data()
+
+    # Main script
+    def main(self):
+        grandpy_response = self.grandpy.grandpy_data_of_message('home')
+        self.user_behavior()
+        return self.user_incivility
+
