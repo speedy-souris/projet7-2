@@ -7,32 +7,34 @@ from frozendict import frozendict
 class CreateConversationData:
     def __init__(self, db_number=0):
         """database initialization"""
-        self.chat_bdAccess = self.get_database_access(db_number=db_number)
+        self.chat_dbAccess = self.get_database_access(db_number=db_number)
 
     @staticmethod
-    def boolean_to_string_conversion(value):
+    def boolean_to_string_conversion(boolean_value):
         """conversion from boolean to string"""
-        if value :
-            value = 'True'
+        if boolean_value :
+            boolean_value = 'True'
         else:
-            value = 'False'
-        return value
+            boolean_value = 'False'
+        return boolean_value
 
     @staticmethod
-    def string_to_boolean_conversion(value):
-        """conversion from string to boolean"""
-        if value == b'False':
-            value = False
-        elif value == b'True':
-            value = True
+    def string_to_boolean_conversion(string_value):
+        """
+            conversion from string to boolean
+        """
+        if string_value == b'False':
+            string_value = False
+        elif string_value == b'True':
+            string_value = True
         else:
-            value = False
-        return value
+            string_value = False
+        return string_value
 
     @staticmethod
-    def string_to_int_conversion(value):
+    def string_to_int_conversion(string_value):
         """conversion from string to integer"""
-        return int(value)
+        return int(string_value)
 
     def get_database_access(self, db_number=0):
         """method for data_connection to the database
@@ -45,26 +47,42 @@ class CreateConversationData:
         )
         return redis_connect
 
-    @property
     def read_conversation_data(self, db_data):
         """reading the value of conversation in db_data"""
         chat_data_value = frozendict({
-            'user_incivility': self.string_to_boolean_conversion(
-                self.chat_dbAccess.get('user_incivility')
+            'user_incivility': self.string_to_boolean_conversion(self.chat_dbAccess.get('user_incivility')),
+            'number_user_incivility': self.string_to_int_conversion(
+                self.chat_dbAccess.get('number_user_incivility')
+            ),
+            'grandpy_overdose_quotas': self.string_to_boolean_conversion(
+                self.chat_dbAccess.get('grandpy_overdose_quotas')
             )
         })
         return chat_data_value[db_data]
 
     def write_conversation_data(self, script_data, script_data_value):
         """writing the value of conversation in db_data"""
-        chat_data_value = frozendict({
-            script_data: self.chat_bdAccess.set (
-                script_data, self.boolean_to_string_conversion(script_data_value)
-            )
-        })
-        return chat_data_value[script_data]
-    
+        self.chat_dbAccess.set(script_data, script_data_value)
+
     def initialization_db_data(self):
-        self.chat_bdAccess.flushall()
-        self.write_conversation_data('user_incivility', None)
+        self.chat_dbAccess.flushall()
+        self.write_conversation_data('user_incivility', self.boolean_to_string_conversion(True))
+        self.write_conversation_data('number_user_incivility', 0)
+        self.write_conversation_data('grandpy_overdose_quotas', self.boolean_to_string_conversion(False))
+
+    def update_db_data(self, conversation):
+        self.write_conversation_data(
+            'user_incivility',\
+            self.boolean_to_string_conversion(conversation.user_incivility)
+        )
+        self.write_conversation_data(
+            'number_user_incivility', conversation.number_user_incivility
+        )
+        if conversation.grandpy_overdose_quotas:
+            self.chat_dbAccess.expire('grandpy_overdose_quotas', 60)
+        else:
+            self.write_conversation_data(
+                'grandpy_overdose_quotas',\
+                self.boolean_to_string_conversion(conversation.grandpy_overdose_quotas)
+        )
 

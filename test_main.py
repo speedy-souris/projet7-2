@@ -8,10 +8,6 @@ class TestMain:
         self.correct_behavior = main('bonjour', db_number=1)
         self.incorrect_behavior = main('vieux', db_number=1)
 
-    def tearDown_module(self):
-        self.correct_behavior.user_incivility = True
-        self.correct_behavior.number_user_incivility = 0
-
     def test_user_behavior_after_home_message(self):
         expected_behavior_result = False
         behavior_result = self.correct_behavior
