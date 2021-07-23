@@ -19,11 +19,15 @@ class TestMain:
 
     def test_number_user_incivility_to_X3(self):
         expected_number_user_incivility_result = 3
+        excepted_grandpy_code = 'exhausted'
         self.incorrect_behavior
         self.incorrect_behavior
         number_user_incivility_result = self.incorrect_behavior
         assert expected_number_user_incivility_result ==\
             number_user_incivility_result.number_user_incivility
+
+        grandpy_code_result = self.incorrect_behavior.grandpy_code
+        assert excepted_grandpy_code == grandpy_code_result
 
 
 
