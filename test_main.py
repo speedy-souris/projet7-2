@@ -8,10 +8,17 @@ class TestMain:
         self.correct_behavior = main('bonjour', db_number=1)
         self.incorrect_behavior = main('vieux', db_number=1)
 
+    def tearDown_method(self):
+        self.correct_behavior.user_conversation_data.conversation_data.initialization_db_data()
+
     def test_user_behavior_after_home_message(self):
         expected_behavior_result = False
+        expected_grandpy_code_result = 'user_question'
         behavior_result = self.correct_behavior
         assert expected_behavior_result == behavior_result.user_incivility
+
+        grandpy_code_result = behavior_result.grandpy_code
+        assert expected_grandpy_code_result == grandpy_code_result
 
         expected_behavior_result = True
         behavior_result = self.incorrect_behavior

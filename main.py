@@ -30,14 +30,15 @@ class UserConversation:
             if self.number_user_incivility >= 3:
                 self.number_user_incivility = 3
                 self.grandpy_overdose_quotas = True
+                self.grandpy_code = 'exhausted'
+        else:
+            self.grandpy_code = 'user_question'
 
 # Main script
 def main(user_question, db_number=0):
     user_conversation_data = UserConversation(user_question, db_number=db_number)
     user_conversation_data.grandpy_code = 'home'
     user_conversation_data.user_incivility_behavior()
-    if user_conversation_data.number_user_incivility == 3:
-        user_conversation_data.grandpy_code = 'exhausted'
     user_conversation_data.conversation_data.update_db_data(user_conversation_data)
     return user_conversation_data
 
