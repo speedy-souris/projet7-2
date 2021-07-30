@@ -27,10 +27,15 @@ class UserConversation:
         self.user_incivility = user.establishing_user_incivility_data()
         if self.user_incivility:
             self.number_user_incivility += 1
+            print(f"\nGrandpy repond {self.grandpy_message.grandpy_data_of_message('mannerless')}")
+            self.grandpy_code = 'mannerless'
             if self.number_user_incivility >= 3:
                 self.number_user_incivility = 3
                 self.grandpy_overdose_quotas = True
+                self.grandpy_code = 'incivility_limit'
+                print(f"\nGrandpy répond {self.grandpy_message.grandpy_data_of_message('incivility_limit')}")
                 self.grandpy_code = 'exhausted'
+                print(f"               {self.grandpy_message.grandpy_data_of_message('exhausted')}")
         else:
             self.grandpy_code = 'user_question'
 
