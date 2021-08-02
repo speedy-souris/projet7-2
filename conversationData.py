@@ -56,6 +56,9 @@ class CreateConversationData:
             ),
             'grandpy_overdose_quotas': self.string_to_boolean_conversion(
                 self.chat_dbAccess.get('grandpy_overdose_quotas')
+            ),
+            'number_user_request': self.string_to_int_conversion(
+                self.chat_dbAccess.get('number_user_request')
             )
         })
         return chat_data_value[db_data]
@@ -69,20 +72,23 @@ class CreateConversationData:
         self.write_conversation_data('user_incivility', self.boolean_to_string_conversion(True))
         self.write_conversation_data('number_user_incivility', 0)
         self.write_conversation_data('grandpy_overdose_quotas', self.boolean_to_string_conversion(False))
+        self.write_conversation_data('number_user_request',0)
 
     def update_db_data(self, conversation):
         self.write_conversation_data(
             'user_incivility',\
-            self.boolean_to_string_conversion(conversation.user_incivility)
+            self.boolean_to_string_conversion(conversation.has_user_incivility)
         )
         self.write_conversation_data(
             'number_user_incivility', conversation.number_user_incivility
         )
-        if conversation.grandpy_overdose_quotas:
+        if conversation.has_grandpy_overdose_quotas:
             self.chat_dbAccess.expire('grandpy_overdose_quotas', 60)
         else:
             self.write_conversation_data(
                 'grandpy_overdose_quotas',\
-                self.boolean_to_string_conversion(conversation.grandpy_overdose_quotas)
+                self.boolean_to_string_conversion(conversation.has_grandpy_overdose_quotas)
         )
-
+        self.write_conversation_data(
+            'number_user_request', conversation.number_user_request
+        )

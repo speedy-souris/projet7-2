@@ -1,6 +1,7 @@
 #coding:utf-8
-#!/usr/bin/env python
+#!/usr
 
+import pdb
 from main import main
 
 class TestMain:
@@ -11,36 +12,35 @@ class TestMain:
     def test_check_user_behavior_after_grandpy_home_message(self):
         has_expected_incivility_behavior = False
         grandpy_code_expected = 'user_question'
-        has_user_incivility_behavior_been_detected = main('bonjour', db_number=1)
+        user_conversation_data = main('bonjour', db_number=1)
 
-        user_incivility_has_been_detected = has_user_incivility_behavior_been_detected.user_incivility
-        assert has_expected_incivility_behavior == user_incivility_has_been_detected
+        assert has_expected_incivility_behavior == user_conversation_data.has_user_incivility
+        assert grandpy_code_expected == user_conversation_data.grandpy_code
 
-        code_grandpy_has_been_detected = has_user_incivility_behavior_been_detected.grandpy_code
-        assert grandpy_code_expected == code_grandpy_has_been_detected
+        has_an_expected_incivility_behavior = False
+        grandpy_code_expected = 'user_question'
+        user_conversation_data = main('ou se trouve Openclassrooms', db_number=1)
 
-        has_an_expected_incivility_behavior = True
-        grandpy_code_expected = 'mannerless'
-        has_user_incivility_behavior_been_detected = main('ou se trouve Openclassrooms', db_number=1)
-
-        user_incivility_has_been_detected = has_user_incivility_behavior_been_detected.user_incivility
-        assert has_an_expected_incivility_behavior == user_incivility_has_been_detected
-
-        code_grandpy_has_been_detected = has_user_incivility_behavior_been_detected.grandpy_code
-        assert grandpy_code_expected == code_grandpy_has_been_detected
+        assert has_an_expected_incivility_behavior == user_conversation_data.has_user_incivility
+        assert grandpy_code_expected == user_conversation_data.grandpy_code
 
     def test_count_number_of_user_incivility_up_to_3(self):
         number_of_expected_user_incivility = 3
         grandpy_code_expected = 'exhausted'
 
-        main('ou se trouve Openclassrooms', db_number=1)
-        main('ou se trouve Openclassrooms', db_number=1)
-        has_user_incivility_behavior_been_detected = main('ou se trouve Openclassrooms', db_number=1)
+        for counter_user_incivility in range(1,3):
+            main('ou se trouve Openclassrooms', db_number=1)
+        user_conversation_data = main('ou se trouve Openclassrooms', db_number=1)
 
-        number_user_incivility_has_been_detected =\
-            has_user_incivility_behavior_been_detected.number_user_incivility
-        assert number_of_expected_user_incivility == number_user_incivility_has_been_detected
+        assert number_of_expected_user_incivility == user_conversation_data.number_user_incivility
+        assert grandpy_code_expected == user_conversation_data.grandpy_code
 
-        grandpy_code_displayed = has_user_incivility_behavior_been_detected.grandpy_code
-        assert grandpy_code_expected == grandpy_code_displayed
+    def test_count_number_of_user_request_up_to_10(self):
+        number_of_expected_user_request = 10
+        main('bonjour', db_number=1)
+        for counter_user_request in range(1,9):
+            main('ou se trouve Openclassrooms', db_number=1)
+        user_conversation_data = main('ou se trouve Openclassrooms', db_number=1)
+
+        assert number_of_expected_user_request == user_conversation_data.number_user_request
 
