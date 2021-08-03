@@ -33,15 +33,15 @@ class LoadUserConversation:
         # treatment of incivility
         if self.has_user_incivility:
             self.number_user_incivility += 1
-            print(f"\nGrandpy repond {self.grandpy_message.grandpy_data_of_message('mannerless')}")
             self.grandpy_code = 'mannerless'
+            print(f"\nGrandpy repond {self.grandpy_message.grandpy_data_of_message('mannerless')}")
             if self.number_user_incivility >= 3:
                 self.number_user_incivility = 3
                 self.has_grandpy_overdose_quotas = True
                 self.grandpy_code = 'incivility_limit'
                 print(f"\nGrandpy répond {self.grandpy_message.grandpy_data_of_message('incivility_limit')}")
                 self.grandpy_code = 'exhausted'
-                print(f"Grandpy code {self.grandpy_message.grandpy_data_of_message('exhausted')}")
+                print(f"Grandpy répond {self.grandpy_message.grandpy_data_of_message('exhausted')}")
         else:
             self.grandpy_code = 'user_question'
 
@@ -52,8 +52,17 @@ class LoadUserConversation:
                 self.number_user_request = 10
                 self.has_grandpy_overdose_quotas = True
                 self.grandpy_code = 'exhausted'
+                print(f"\nGrandpy répond {self.grandpy_message.grandpy_data_of_message('exhausted')}")
                 print(f"Grandpy code {self.grandpy_message.grandpy_data_of_message('exhausted')}")
-            
+            elif 1 <= self.number_user_request <= 4 or 6 <= self.number_user_request <= 9:
+                self.grandpy_code = 'response'
+                print(f"\nGrandpy répond {self.grandpy_message.grandpy_data_of_message('response')}")
+                self.grandpy_code = 'user_question'
+                print(f"Grandpy code {self.grandpy_message.grandpy_data_of_message('user_question')}")
+            elif self.number_user_request == 5:
+                self.grandpy_code = 'tired'
+                print(f"\nGrandpy répond {self.grandpy_message.grandpy_data_of_message('tired')}")
+                print(f"\nGrandpy répond {self.grandpy_message.grandpy_data_of_message('response')}")
 
 # Main script
 def main(user_question, db_number=0):
