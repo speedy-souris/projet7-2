@@ -41,13 +41,19 @@ class LoadUserConversation:
                 self.grandpy_code = 'incivility_limit'
                 print(f"\nGrandpy répond {self.grandpy_message.grandpy_data_of_message('incivility_limit')}")
                 self.grandpy_code = 'exhausted'
-                print(f"               {self.grandpy_message.grandpy_data_of_message('exhausted')}")
+                print(f"Grandpy code {self.grandpy_message.grandpy_data_of_message('exhausted')}")
         else:
             self.grandpy_code = 'user_question'
 
     def increment_user_request_counter(self):
         if not self.has_user_incivility:
             self.number_user_request += 1
+            if self.number_user_request >= 10:
+                self.number_user_request = 10
+                self.has_grandpy_overdose_quotas = True
+                self.grandpy_code = 'exhausted'
+                print(f"Grandpy code {self.grandpy_message.grandpy_data_of_message('exhausted')}")
+            
 
 # Main script
 def main(user_question, db_number=0):

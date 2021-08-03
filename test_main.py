@@ -37,10 +37,12 @@ class TestMain:
 
     def test_count_number_of_user_request_up_to_10(self):
         number_of_expected_user_request = 10
+        grandpy_code_expected = 'exhausted'
         main('bonjour', db_number=1)
-        for counter_user_request in range(1,9):
+        for counter_user_request in range(1,10):
             main('ou se trouve Openclassrooms', db_number=1)
         user_conversation_data = main('ou se trouve Openclassrooms', db_number=1)
 
         assert number_of_expected_user_request == user_conversation_data.number_user_request
+        assert grandpy_code_expected == user_conversation_data.grandpy_code
 
