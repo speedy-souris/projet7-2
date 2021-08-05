@@ -1,6 +1,6 @@
 #coding:utf-8
 #!/usr/bin/env python
-
+"""conversation data management menu"""
 import redis
 from frozendict import frozendict
 
