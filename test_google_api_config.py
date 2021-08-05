@@ -32,7 +32,6 @@ class TestGoogleApi:
         mock_result = identifier_expected
         mockreturn = get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
-
         identifier_result = self.google_api_data.get_placeid_from_address('openClassrooms', self.key_map)
         assert identifier_expected == identifier_result
 
@@ -43,7 +42,6 @@ class TestGoogleApi:
         mock_result = identifier_expected
         mockreturn = get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
-
         identifier_result = self.google_api_data.get_placeid_from_address('rueopenClassRooms', self.key_map)
         assert identifier_expected == identifier_result
         
@@ -55,7 +53,6 @@ class TestGoogleApi:
         mock_result = identifier_expected
         mockreturn = get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
-        
         identifier_result =\
             self.google_api_data.get_placeid_from_address('openClassrooms', self.key_static_map)
         assert identifier_expected == identifier_result
