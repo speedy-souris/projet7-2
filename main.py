@@ -7,7 +7,9 @@ from question import Question
 from conversationData import CreateConversationData
 
 class LoadUserConversation:
+    """class for managing grandpy's responses according to user behavior """
     def __init__(self, user_question, db_number=0):
+        """initializing attributes with redis data values"""
         self.user_question = user_question
         self.grandpy_message = GrandpyRobot()
         self.grandpy_code = ' '
@@ -30,6 +32,7 @@ class LoadUserConversation:
             self.conversation_data.read_conversation_data('number_user_incomprehension')
 
     def manage_user_incivility_behavior(self):
+        """Management of user incivility"""
         user = Question(self.user_question)
         # reassessment of the state
         #so as not to reset incivility
@@ -48,6 +51,7 @@ class LoadUserConversation:
             self.grandpy_code = 'user_question'
 
     def increment_user_request_counter(self):
+        """Management of the number of user requests"""
         if not self.has_user_incivility:
             self.number_user_request += 1
             if self.number_user_request >= 10:
@@ -61,6 +65,7 @@ class LoadUserConversation:
                 self.grandpy_code = 'tired'
 
     def manage_user_indecency_behavior(self):
+        """Management of user indecency"""
         user = Question(self.user_question)
         self.has_user_indecency = user.establishing_user_indecency_data()
         if self.has_user_indecency:
@@ -72,6 +77,7 @@ class LoadUserConversation:
                 self.grandpy_code = 'indecency_limit'
 
     def manage_user_incomprehension_behavior(self):
+        """Management of user incomprehension"""
         user = Question(self.user_question)
         self.has_user_incomprehension = user.establishing_user_incomprehension_data()
         if self.has_user_incomprehension:
@@ -84,6 +90,7 @@ class LoadUserConversation:
 
 # Main script
 def main(user_question, db_number=0):
+    """Management of the discussion between grandpy robot and a user"""
     user_conversation_data = LoadUserConversation(user_question, db_number=db_number)
     user_conversation_data.grandpy_code = 'home'
     user_conversation_data.manage_user_incivility_behavior()
