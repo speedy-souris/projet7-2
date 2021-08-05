@@ -59,7 +59,11 @@ class CreateConversationData:
             ),
             'number_user_request': self.string_to_int_conversion(
                 self.chat_dbAccess.get('number_user_request')
-            )
+            ),
+            'user_indecency': self.string_to_boolean_conversion(self.chat_dbAccess.get('user_indecency')),
+            'number_user_indecency': self.string_to_int_conversion(
+                self.chat_dbAccess.get('number_user_indecency')
+            ),
         })
         return chat_data_value[db_data]
 
@@ -73,6 +77,8 @@ class CreateConversationData:
         self.write_conversation_data('number_user_incivility', 0)
         self.write_conversation_data('grandpy_overdose_quotas', self.boolean_to_string_conversion(False))
         self.write_conversation_data('number_user_request',0)
+        self.write_conversation_data('user_indecency', self.boolean_to_string_conversion(True))
+        self.write_conversation_data('number_user_indecency', 0)
 
     def update_db_data(self, conversation):
         self.write_conversation_data(
@@ -91,4 +97,11 @@ class CreateConversationData:
         )
         self.write_conversation_data(
             'number_user_request', conversation.number_user_request
+        )
+        self.write_conversation_data(
+            'user_indecency',\
+            self.boolean_to_string_conversion(conversation.has_user_indecency)
+        )
+        self.write_conversation_data(
+            'number_user_indecency', conversation.number_user_indecency
         )

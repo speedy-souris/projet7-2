@@ -26,7 +26,7 @@ class TestMain:
 
     def test_count_number_of_user_incivility_up_to_3(self):
         number_of_expected_user_incivility = 3
-        grandpy_code_expected = 'exhausted'
+        grandpy_code_expected = 'incivility_limit'
 
         for counter_user_incivility in range(1,3):
             main('ou se trouve Openclassrooms', db_number=1)
@@ -57,3 +57,13 @@ class TestMain:
         assert number_of_expected_user_request == user_conversation_data.number_user_request
         assert grandpy_code_expected == user_conversation_data.grandpy_code
 
+    def test_count_number_of_user_indecency_up_to_3(self):
+        number_of_expected_user_indecency = 3
+        grandpy_code_expected = 'indecency_limit'
+        main('bonjour', db_number=1)
+        for counter_user_indecency in range(1,3):
+            main('vieux', db_number=1)
+        user_conversation_data = main('vieux', db_number=1)
+
+        assert number_of_expected_user_indecency == user_conversation_data.number_user_indecency
+        assert grandpy_code_expected == user_conversation_data.grandpy_code
