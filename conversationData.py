@@ -77,6 +77,7 @@ class CreateConversationData:
         self.chat_dbAccess.set(script_data, script_data_value)
 
     def initialization_db_data(self):
+        """initialize conversation values in db_data"""
         self.chat_dbAccess.flushall()
         self.write_conversation_data('user_incivility', self.boolean_to_string_conversion(True))
         self.write_conversation_data('number_user_incivility', 0)
@@ -88,6 +89,8 @@ class CreateConversationData:
         self.write_conversation_data('number_user_incomprehension', 0)
 
     def update_db_data(self, conversation):
+        """update redis data 
+        with the attributes of the LoadUserConversation class of the main.py module"""
         self.write_conversation_data(
             'user_incivility',\
             self.boolean_to_string_conversion(conversation.has_user_incivility)
