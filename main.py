@@ -25,6 +25,9 @@ class LoadUserConversation:
         self.has_user_indecency = self.conversation_data.read_conversation_data('user_indecency')
         self.number_user_indecency =\
             self.conversation_data.read_conversation_data('number_user_indecency')
+        self.has_user_incomprehension = self.conversation_data.read_conversation_data('user_incomprehension')
+        self.number_user_incomprehension =\
+            self.conversation_data.read_conversation_data('number_user_incomprehension')
 
     def manage_user_incivility_behavior(self):
         user = Question(self.user_question)
@@ -68,6 +71,17 @@ class LoadUserConversation:
                 self.has_grandpy_overdose_quotas = True
                 self.grandpy_code = 'indecency_limit'
 
+    def manage_user_incomprehension_behavior(self):
+        user = Question(self.user_question)
+        self.has_user_incomprehension = user.establishing_user_incomprehension_data()
+        if self.has_user_incomprehension:
+            self.number_user_incomprehension += 1
+            self.grandpy_code = 'incomprehension'
+            if self.number_user_incomprehension >= 3:
+                self.number_user_incomprehension = 3
+                self.has_grandpy_overdose_quotas = True
+                self.grandpy_code = 'incomprehension_limit'
+
 # Main script
 def main(user_question, db_number=0):
     user_conversation_data = LoadUserConversation(user_question, db_number=db_number)
@@ -75,6 +89,7 @@ def main(user_question, db_number=0):
     user_conversation_data.manage_user_incivility_behavior()
     user_conversation_data.increment_user_request_counter()
     user_conversation_data.manage_user_indecency_behavior()
+    user_conversation_data.manage_user_incomprehension_behavior()
     user_conversation_data.conversation_data.update_db_data(user_conversation_data)
     return user_conversation_data
 

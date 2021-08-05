@@ -67,3 +67,14 @@ class TestMain:
 
         assert number_of_expected_user_indecency == user_conversation_data.number_user_indecency
         assert grandpy_code_expected == user_conversation_data.grandpy_code
+    
+    def test_count_number_of_user_incomprehension_up_to_3(self):
+        number_of_expected_user_incomprehension = 3
+        grandpy_code_expected = 'incomprehension_limit'
+        main('bonjour', db_number=1)
+        for counter_user_indecency in range(1,3):
+            main('XXXX', db_number=1)
+        user_conversation_data = main('XXXX', db_number=1)
+
+        assert number_of_expected_user_incomprehension == user_conversation_data.number_user_incomprehension
+        assert grandpy_code_expected == user_conversation_data.grandpy_code
