@@ -1,5 +1,5 @@
 #coding:utf-8
-#!/usr
+#!/usr/bin/env python
 
 import pdb
 from main import main
