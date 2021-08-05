@@ -9,6 +9,7 @@ class GrandpyRobot:
 
     @staticmethod
     def grandpy_data_of_message(key_data):
+        """management of all responses from grandpy"""
         grandpy_message = frozendict({
             'home': "Bonjour Mon petit, en quoi puis-je t'aider ?",
             'user_question': 'As tu une nouvelle question a me demander ?',
