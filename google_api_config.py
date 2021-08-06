@@ -31,6 +31,22 @@ class GoogleApiData:
             'key': f'{key}'
         }
         return parameters
+        
+    @staticmethod
+    def get_settings_for_map_static_api(address, localization, key):
+        """determination of the static map for the address found"""
+        markers_data =\
+            f"color:red|label:A|{localization['lat']},"\
+            f"{localization['lng']}"
+        parameters = {
+            'center': f'{address}',
+            'zoom': '18.5',
+            'size': '600x300',
+            'maptype': 'roadmap',
+            'markers': f'{markers_data}',
+            'key': f'{key}'
+        }
+        return parameters
 
     def get_placeid_from_address(self, address, key):
         """Google map API place_id search function
@@ -68,3 +84,10 @@ class GoogleApiData:
         parameter_data = self.get_settings_for_address_api(placeid, key)
         address_api_value = self.get_url_from_json(url_api, parameter_data)
         return address_api_value
+
+    def get_static_map_from_address_api(self, address, localization, key):
+        """Display of the static map at the user's request"""
+        url_api = 'https://maps.googleapis.com/maps/api/staticmap'
+        parameter_data = self.get_settings_for_map_static_api(address, localization, key)
+        map_static_api = requests.get(url=url_api, params=parameter_data)
+        return map_static_api
