@@ -5,15 +5,6 @@ import requests
 from apiData import ApiDataConfig
 from google_api_config import GoogleApiData
 
-def get_mockreturn(result):
-    def mock_get(url, params):
-        class JsonResponse:
-            @staticmethod
-            def json():
-                return result
-        return JsonResponse()
-    return mock_get
-
 class TestGoogleApi:
     def setup_method(self):
         self.google_api_data = GoogleApiData()
@@ -30,7 +21,7 @@ class TestGoogleApi:
             'status' : 'OK'
         }
         mock_result = identifier_expected
-        mockreturn = get_mockreturn(mock_result)
+        mockreturn = self.google_api_config.get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
         identifier_result = self.google_api_data.get_placeid_from_address('openClassrooms', self.key_map)
         assert identifier_expected == identifier_result
@@ -40,7 +31,7 @@ class TestGoogleApi:
             'status' : 'ZERO_RESULTS'
         }
         mock_result = identifier_expected
-        mockreturn = get_mockreturn(mock_result)
+        mockreturn = self.google_api_config.get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
         identifier_result = self.google_api_data.get_placeid_from_address('rueopenClassRooms', self.key_map)
         assert identifier_expected == identifier_result
@@ -51,7 +42,7 @@ class TestGoogleApi:
             'status' : 'REQUEST_DENIED'
         }
         mock_result = identifier_expected
-        mockreturn = get_mockreturn(mock_result)
+        mockreturn = self.google_api_config.get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
         identifier_result =\
             self.google_api_data.get_placeid_from_address('openClassrooms', self.key_static_map)
@@ -70,7 +61,7 @@ class TestGoogleApi:
             'status': 'OK'
         }
         mock_result = address_api_expected
-        mockreturn = get_mockreturn(mock_result)
+        mockreturn = self.google_api_config.get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
         address_api_result =\
             self.google_api_data.get_address_api_from_placeid('ChIJIZX8lhRu5kcRGwYk8Ce3Vc8', self.key_map)
@@ -82,7 +73,7 @@ class TestGoogleApi:
            'status' : 'REQUEST_DENIED'
         }
         mock_result = address_api_expected
-        mockreturn = get_mockreturn(mock_result)
+        mockreturn = self.google_api_config.get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
         address_api_result =\
             self.google_api_data.get_address_api_from_placeid('ChIJIZX8lhRu5kcRGwYk8Ce3Vc8', self.key_static_map)
@@ -93,7 +84,7 @@ class TestGoogleApi:
             'status': 'INVALID_REQUEST'
         }
         mock_result = address_api_expected
-        mockreturn = get_mockreturn(mock_result)
+        mockreturn = self.google_api_config.get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
         address_api_result =\
             self.google_api_data.get_address_api_from_placeid('ChIJky12Zn3p9EcREQI4zzdgzbk', self.key_map)

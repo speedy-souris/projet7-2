@@ -11,6 +11,16 @@ class ApiDataConfig:
         self.key_static_map = ' '
         self.has_status_prod = None
 
+    @staticmethod
+    def get_mockreturn(result):
+        def mock_get(url, params):
+            class JsonResponse:
+                @staticmethod
+                def json():
+                    return result
+            return JsonResponse()
+        return mock_get
+
     def read_internal_google_api_keys(self):
         """Internal Key Management Local / Production"""
         if os.environ.get('HEROKU_KEY_API_MAP') is None: # local internal key
