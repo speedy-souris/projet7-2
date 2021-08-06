@@ -3,6 +3,7 @@
 """api data management menu"""
 
 import os
+import requests
 
 class ApiDataConfig:
     """API data configuration"""
@@ -20,6 +21,13 @@ class ApiDataConfig:
                     return result
             return JsonResponse()
         return mock_get
+
+    @staticmethod
+    def get_url_from_json(url, params):
+        """conversion of the address found in JSON format"""
+        request = requests.get(url, params)
+        url_json = request.json()
+        return url_json
 
     def read_internal_google_api_keys(self):
         """Internal Key Management Local / Production"""

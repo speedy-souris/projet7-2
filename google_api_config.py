@@ -2,15 +2,12 @@
 #!/usr/bin/env python
 """google api config management menu"""
 import requests
+from apiData import ApiDataConfig
 
 class GoogleApiData:
     """management of Google APIs settings"""
-    @staticmethod
-    def get_url_from_json(url, params):
-        """conversion of the address found in JSON format"""
-        request = requests.get(url, params)
-        url_json = request.json()
-        return url_json
+    def __init__(self):
+        self.google_api_config = ApiDataConfig()
 
     @staticmethod
     def get_settings_for_placeid_api(address, key):
@@ -31,7 +28,7 @@ class GoogleApiData:
             'key': f'{key}'
         }
         return parameters
-        
+
     @staticmethod
     def get_settings_for_map_static_api(address, localization, key):
         """determination of the static map for the address found"""
@@ -62,7 +59,7 @@ class GoogleApiData:
         """
         url_api = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json'
         parameter_data = self.get_settings_for_placeid_api(address, key)
-        placeid_value = self.get_url_from_json(url_api, parameter_data)
+        placeid_value = self.google_api_config.get_url_from_json(url_api, parameter_data)
         return placeid_value
 
     def get_address_api_from_placeid(self, placeid, key):
@@ -82,7 +79,7 @@ class GoogleApiData:
         """
         url_api = 'https://maps.googleapis.com/maps/api/place/details/json'
         parameter_data = self.get_settings_for_address_api(placeid, key)
-        address_api_value = self.get_url_from_json(url_api, parameter_data)
+        address_api_value = self.google_api_config.get_url_from_json(url_api, parameter_data)
         return address_api_value
 
     def get_static_map_from_address_api(self, address, localization, key):

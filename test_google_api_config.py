@@ -48,7 +48,7 @@ class TestGoogleApi:
             self.google_api_data.get_placeid_from_address('openClassrooms', self.key_static_map)
         assert identifier_expected == identifier_result
 
-    def test_geolocated_api_adresse(self, monkeypatch):
+    def test_geolocated_api_address(self, monkeypatch):
         address_api_expected = {
             'html_attributions': [],
             'result': {
