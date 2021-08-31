@@ -10,40 +10,25 @@ class TestWikiMediaAPi:
         self.wiki_api_config = ApiDataConfig()
         self.wiki_api_data = WikiApiData()
 
-    def test_search_wiki_media_page(self, monkeypatch):
-        wiki_page_expected = {
-            'query': {
-                'geosearch': [
-                    {
-                        'pageid': 3120618, 'ns': 0, 'title': 'Quai de la Charente',
-                        'lat': 48.895636, 'lon': 2.384586, 'dist': 226.3, 'primary': ''
-                    }
-                ]
-            }
+    def test_wiki_media_page_content(self, monkeypatch):
+        mock_result =  {
+            'query':
+                {
+                    'geosearch': [
+                        {
+                            'title': 'Quai de la Gironde'
+                        },
+                        {
+                            'title': 'Parc du Pont de Flandre'
+                        }
+                    ]
+                }
         }
-        mock_result = wiki_page_expected
+        wiki_content_expected = mock_result
         mockreturn = self.wiki_api_config.get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
 
-        wiki_page_result = self.wiki_api_data.get_page_from_wiki_api(48.895636, 2.384586)
-        assert wiki_page_result == wiki_page_expected
+        wiki_content_result = self.wiki_api_data.get_page_from_wiki_api(48.895636, 2.384586)
+        assert wiki_content_result == wiki_content_expected
 
-        wiki_page_expected = {
-            'query': {
-                'geosearch': [
-                    {
-                        'title': 'Bouée Soul'
-                    },
-                    {
-                        'title': 'Null Island'
-                    }
-                ]
-            }
-        }
-        mock_result = wiki_page_expected
-        mockreturn = self.wiki_api_config.get_mockreturn(mock_result)
-        monkeypatch.setattr(requests, 'get', mockreturn)
-
-        wiki_page_result = self.wiki_api_data.get_page_from_wiki_api(0, 0)
-        assert wiki_page_result == wiki_page_expected
 

@@ -23,8 +23,8 @@ class WikiApiData:
         return parameters
 
     def get_page_from_wiki_api(self, latitude, longitude):
-        """A.P.I wikipedia function that returns a file
-            Json containing the history of the requested address
+        """Calls API wikipedia and returns a Json
+        example:
         {
             'query': {
                 'geosearch': [
@@ -40,3 +40,5 @@ class WikiApiData:
         parameter_data = self.get_url_parameters_for_wiki_api_page_localization(latitude, longitude)
         page_wiki = self.wikimedia_api_config.get_url_from_json(url_api, parameter_data)
         return page_wiki
+
+
