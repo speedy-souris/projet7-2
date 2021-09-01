@@ -5,6 +5,7 @@
 from grandpyRobot import GrandpyRobot
 from question import Question
 from conversationData import CreateConversationData
+from internal_api_management import InternalApiConfig
 
 class LoadUserConversation:
     """class for managing grandpy's responses according to user behavior """
@@ -14,6 +15,7 @@ class LoadUserConversation:
         self.grandpy_message = GrandpyRobot()
         self.grandpy_code = ' '
         self.conversation_data = CreateConversationData(db_number=db_number)
+        self.api_management = InternalApiConfig()
         try:
             self.has_grandpy_overdose_quotas =\
                 self.conversation_data.read_conversation_data('grandpy_overdose_quotas')
@@ -97,6 +99,7 @@ def main(user_question, db_number=0):
     user_conversation_data.increment_user_request_counter()
     user_conversation_data.manage_user_indecency_behavior()
     user_conversation_data.manage_user_incomprehension_behavior()
+    # ~ user_conversation_data.api_management.wiki_pages(user_question)
     user_conversation_data.conversation_data.update_db_data(user_conversation_data)
     return user_conversation_data
 
