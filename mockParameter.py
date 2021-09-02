@@ -1,6 +1,7 @@
 #coding:utf-8
 #!/usr/bin/env python
 """Mock data management"""
+import requests
 
 class MockData:
     """mock internal configuration

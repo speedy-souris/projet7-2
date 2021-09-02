@@ -3,15 +3,20 @@
 """google api config management menu"""
 import requests
 from apiData import ApiDataConfig
+from mockParameter import MockData
 
 class GoogleApiData:
     """management of Google APIs settings"""
     def __init__(self):
         self.google_api_config = ApiDataConfig()
+        self.mock_params = MockData()
+        self.api_keys = self.google_api_config.read_internal_google_api_keys()
+        self.key_map = self.api_keys[0]
+        self.key_static_map = self.api_keys[1]
 
-    @staticmethod
-    def get_settings_for_placeid_api(address, key):
+    def get_settings_for_placeid_api(self, address):
         """determining placeid for the address found"""
+        key = self.key_map
         parameters = {
             'input': f'{address}',
             'inputtype': 'textquery',
@@ -19,9 +24,9 @@ class GoogleApiData:
         }
         return parameters
 
-    @staticmethod
-    def get_settings_for_address_api(placeid, key):
+    def get_settings_for_address_api(self, placeid):
         """determining the localized address for the found placeid"""
+        key = self.key_map
         parameters = {
             'placeid': f'{placeid}',
             'fields': 'formatted_address,geometry',
@@ -29,9 +34,9 @@ class GoogleApiData:
         }
         return parameters
 
-    @staticmethod
-    def get_settings_for_map_static_api(address, localization, key):
+    def get_settings_for_map_static_api(self, address, localization):
         """determination of the static map for the address found"""
+        key = self.key_map
         markers_data =\
             f"color:red|label:A|{localization['lat']},"\
             f"{localization['lng']}"
@@ -45,7 +50,7 @@ class GoogleApiData:
         }
         return parameters
 
-    def get_placeid_from_address(self, address, key):
+    def get_placeid_from_address(self, address):
         """Google map API place_id search function
         Result ok with address to 'openClassrooms'
         {
@@ -58,11 +63,11 @@ class GoogleApiData:
         }
         """
         url_api = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json'
-        parameter_data = self.get_settings_for_placeid_api(address, key)
-        placeid_value = self.google_api_config.get_url_from_json(url_api, parameter_data)
+        parameter_data = self.get_settings_for_placeid_api(address)
+        placeid_value = self.mock_params.get_url_from_json(url_api, parameter_data)
         return placeid_value
 
-    def get_address_api_from_placeid(self, placeid, key):
+    def get_address_api_from_placeid(self, placeid):
         """Google map API address search with place_id function
             Result OK with place_id 'ChIJIZX8lhRu5kcRGwYk8Ce3Vc8'
             {
@@ -78,13 +83,13 @@ class GoogleApiData:
             }
         """
         url_api = 'https://maps.googleapis.com/maps/api/place/details/json'
-        parameter_data = self.get_settings_for_address_api(placeid, key)
-        address_api_value = self.google_api_config.get_url_from_json(url_api, parameter_data)
+        parameter_data = self.get_settings_for_address_api(placeid)
+        address_api_value = self.mock_params.get_url_from_json(url_api, parameter_data)
         return address_api_value
 
-    def get_static_map_from_address_api(self, address, localization, key):
+    def get_static_map_from_address_api(self, address, localization):
         """Display of the static map at the user's request"""
         url_api = 'https://maps.googleapis.com/maps/api/staticmap'
-        parameter_data = self.get_settings_for_map_static_api(address, localization, key)
+        parameter_data = self.get_settings_for_map_static_api(address, localization)
         map_static_api = requests.get(url=url_api, params=parameter_data)
         return map_static_api

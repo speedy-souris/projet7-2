@@ -2,12 +2,12 @@
 #!/usr/bin/env python
 """wikiMedia api config management menu"""
 
-from apiData import ApiDataConfig
+from google_api_config import GoogleApiData
 
 class WikiApiData:
     """management of WikiMedia APIs settings"""
     def __init__(self):
-        self.wikimedia_api_config = ApiDataConfig()
+        self.google_mock = GoogleApiData()
 
     @staticmethod
     def get_url_parameters_for_wiki_api_page_localization(latitude, longitude):
@@ -38,7 +38,7 @@ class WikiApiData:
         """
         url_api = 'https://fr.wikipedia.org/w/api.php'
         parameter_data = self.get_url_parameters_for_wiki_api_page_localization(latitude, longitude)
-        page_wiki = self.wikimedia_api_config.get_url_from_json(url_api, parameter_data)
+        page_wiki = self.google_mock.mock_params.get_url_from_json(url_api, parameter_data)
         return page_wiki
 
 

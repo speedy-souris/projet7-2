@@ -10,8 +10,6 @@ class InternalApiConfig:
     def __init__(self):
         self.google_api = GoogleApiData()
         self.wikimedia_api = WikiApiData()
-        self.api_key = self.google_api.google_api_config.read_internal_google_api_keys()
-        self.key_map = self.api_key[0]
 
     def wiki_pages(self, user_question):
         """searches for pages on the WikiMedia API
@@ -54,12 +52,12 @@ class InternalApiConfig:
             }
         }
         """
-        place_id_research = self.google_api.get_placeid_from_address(user_question, self.key_map)
+        place_id_research = self.google_api.get_placeid_from_address(user_question)
         try:
             place_id = place_id_research['candidates'][0]['place_id']
         except IndexError:
             return {}
-        address_api = self.google_api.get_address_api_from_placeid(place_id, self.key_map)
+        address_api = self.google_api.get_address_api_from_placeid(place_id)
         latitude = address_api['result']['geometry']['location']['lat']
         longitude = address_api['result']['geometry']['location']['lng']
         wiki_pages = self.wikimedia_api.get_page_from_wiki_api(latitude, longitude)

@@ -3,7 +3,6 @@
 """api data management menu"""
 
 import os
-import requests
 
 class ApiDataConfig:
     """API data configuration"""
