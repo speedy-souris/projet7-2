@@ -11,7 +11,7 @@ class InternalApiConfig:
         self.google_api = GoogleApiData()
         self.wikimedia_api = WikiApiData()
 
-    def wiki_pages(self, user_question):
+    def wiki_address_pages(self, user_question):
         """searches for pages on the WikiMedia API
         with the location coordinates requested by the user
         (after the parser)
@@ -55,7 +55,7 @@ class InternalApiConfig:
         place_id_research = self.google_api.get_placeid_from_address(user_question)
         try:
             place_id = place_id_research['candidates'][0]['place_id']
-        except IndexError:
+        except (IndexError, KeyError):
             return {}
         address_api = self.google_api.get_address_api_from_placeid(place_id)
         latitude = address_api['result']['geometry']['location']['lat']
@@ -65,4 +65,5 @@ class InternalApiConfig:
 
 if __name__ == '__main__':
     api = InternalApiConfig()
-    print(api.wiki_pages('openClassrooms'))
+    print(api.google_api.get_placeid_from_address('openClassrooms'))
+    # ~ print(api.wiki_pages('openClassrooms'))
