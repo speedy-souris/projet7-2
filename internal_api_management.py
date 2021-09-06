@@ -55,7 +55,7 @@ class InternalApiConfig:
         place_id_research = self.google_api.get_placeid_from_address(user_question)
         try:
             place_id = place_id_research['candidates'][0]['place_id']
-        except (IndexError, KeyError):
+        except KeyError:
             return {}
         address_api = self.google_api.get_address_api_from_placeid(place_id)
         latitude = address_api['result']['geometry']['location']['lat']
@@ -65,5 +65,14 @@ class InternalApiConfig:
 
 if __name__ == '__main__':
     api = InternalApiConfig()
-    print(api.google_api.get_placeid_from_address('openClassrooms'))
-    # ~ print(api.wiki_pages('openClassrooms'))
+    user_question = 'openClassrooms'
+    placeid_research = api.google_api.get_placeid_from_address(user_question)
+    placeid = placeid_research['candidates'][0]['place_id']
+    address_api = api.google_api.get_address_api_from_placeid(placeid)
+    latitude = address_api['result']['geometry']['location']['lat']
+    longitude = address_api['result']['geometry']['location']['lng']
+    wiki_pages = api.wikimedia_api.get_page_from_wiki_api(latitude, longitude)
+    print(f'\nValeur 1\n {placeid_research}')
+    print(f'\nValeur 2\n {address_api}')
+    print(f'\nValeur 3\n {wiki_pages}')
+    

@@ -41,7 +41,9 @@ class TestInternalAPIManagement:
         mock_result2 = expected_result2
         mock_result3 = expected_result3
         mockreturn =\
-            self.api_address_pages.google_api.mock_params.get_mockreturn2(mock_result1, mock_result2, mock_result3)
+            self.api_address_pages.google_api.mock_params.get_mockreturn2(
+                mock_result1, mock_result2, mock_result3
+            )
         monkeypatch.setattr(requests, 'get', mockreturn)
 
         result = self.api_address_pages.wiki_address_pages(self.user_question)
