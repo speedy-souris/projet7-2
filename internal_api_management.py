@@ -55,7 +55,7 @@ class InternalApiConfig:
         place_id_research = self.google_api.get_placeid_from_address(user_question)
         try:
             place_id = place_id_research['candidates'][0]['place_id']
-        except KeyError:
+        except (TypeError,KeyError):
             return {}
         address_api = self.google_api.get_address_api_from_placeid(place_id)
         latitude = address_api['result']['geometry']['location']['lat']
