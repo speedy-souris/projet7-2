@@ -6,10 +6,10 @@ from internal_api_management import InternalApiConfig
 
 class TestInternalAPIManagement:
     def setup_method (self):
-        self.user_question = 'openClassrooms'
         self.api_address_pages = InternalApiConfig()
+        self.user_question = 'openClassrooms'
 
-    def test_api_address_pages(self, monkeypatch):
+    def test_wiki_address_pages(self, monkeypatch):
         expected_result1 = {
             'candidates': [{
                 'place_id': 'ChIJIZX8lhRu5kcRGwYk8Ce3Vc8'
@@ -46,5 +46,10 @@ class TestInternalAPIManagement:
             )
         monkeypatch.setattr(requests, 'get', mockreturn)
 
-        result = self.api_address_pages.wiki_address_pages(self.user_question)
-        assert result == expected_result3
+        result1 = self.api_address_pages.google_api.get_placeid_from_address(self.user_question)
+        print(f'resultat 1 = {result1}')
+        result2 = self.api_address_pages.google_api.get_address_api_from_placeid(result1)
+        latitude = result2['result']['geometry']['location']['lat']
+        longitude = result2['result']['geometry']['location']['lng']
+        result = self.api_address_pages.wikimedia_api.get_page_from_wiki_api(latitude, longitude)
+        assert result == mock_result3

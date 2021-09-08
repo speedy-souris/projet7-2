@@ -93,3 +93,11 @@ class GoogleApiData:
         parameter_data = self.get_settings_for_map_static_api(address, localization)
         map_static_api = requests.get(url=url_api, params=parameter_data)
         return map_static_api
+
+if __name__ == '__main__':
+    data_api = GoogleApiData()
+    address = data_api.get_placeid_from_address('openClassrooms')
+    print(f'\n address {address}')
+    address_from_placeid = address['candidates'][0]['place_id']
+    placeid = data_api.get_address_api_from_placeid(address_from_placeid)
+    print(f'\nplace_id = {placeid}\n')
