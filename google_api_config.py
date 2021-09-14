@@ -6,13 +6,23 @@ from apiData import ApiDataConfig
 from mockParameter import MockData
 
 class GoogleApiData:
-    """management of Google APIs settings"""
+    """management of Google APIs settings
+       get_settings_for_placeid_api, get_settings_for_address_api, get_settings_for_map_static_api
+       are methods that define parameters to convert API urls to JSON format .
+       ------
+       get_placeid_from_address method determines the place_id value 
+       from the address argument in the GoogleMap API .
+       ------
+       get_address_api_from_placeid determines the value of the geolocated address 
+       with the placeid argument in the GoogleMap API .
+       ------
+       get_static_map_from_address api determines the position of the geolocated address 
+       on the map with the address / localization arguments in the static GoogleMap API ."""
     def __init__(self):
         self.google_api_config = ApiDataConfig()
         self.mock_params = MockData()
-        self.api_keys = self.google_api_config.read_internal_google_api_keys()
-        self.key_map = self.api_keys[0]
-        self.key_static_map = self.api_keys[1]
+        self.key_map = self.google_api_config.get_google_api_data('map')
+        self.key_static_map = self.google_api_config.get_google_api_data('static_map')
 
     def get_settings_for_placeid_api(self, address):
         """determining placeid for the address found"""
@@ -93,3 +103,11 @@ class GoogleApiData:
         parameter_data = self.get_settings_for_map_static_api(address, localization)
         map_static_api = requests.get(url=url_api, params=parameter_data)
         return map_static_api
+
+if __name__ == '__main__':
+    data_api = GoogleApiData()
+    address = data_api.get_placeid_from_address('openClassrooms')
+    print(f'\n address {address}')
+    address_from_placeid = address['candidates'][0]['place_id']
+    placeid = data_api.get_address_api_from_placeid(address_from_placeid)
+    print(f'\nplace_id = {placeid}\n')

@@ -5,7 +5,12 @@
 from google_api_config import GoogleApiData
 
 class WikiApiData:
-    """management of WikiMedia APIs settings"""
+    """management of WikiMedia APIs settings
+       get_url_parameters_for_wiki_api_page_localization is a method 
+       which defines parameters to convert API urls to JSON format .
+       -------
+       get_pages_from_wiki_api is a wikipedia API method that displays all wiki pages 
+       with latitude and longitude arguments obtained by GoogleMap API ."""
     def __init__(self):
         self.google_mock = GoogleApiData()
 
@@ -22,8 +27,8 @@ class WikiApiData:
         }
         return parameters
 
-    def get_page_from_wiki_api(self, latitude, longitude):
-        """Calls API wikipedia and returns a Json
+    def get_pages_from_wiki_api(self, latitude, longitude):
+        """Calls API wikipedia and returns all wiki pages
         example:
         {
             'query': {

@@ -19,7 +19,7 @@ class TestGoogleApi:
         mockreturn = self.google_api_data.mock_params.get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
         identifier_result = self.google_api_data.get_placeid_from_address('openClassrooms')
-        assert identifier_expected == identifier_result
+        assert mock_result == identifier_result
 
         identifier_expected = {
             'candidates': [],
@@ -29,7 +29,7 @@ class TestGoogleApi:
         mockreturn = self.google_api_data.mock_params.get_mockreturn(mock_result)
         monkeypatch.setattr(requests, 'get', mockreturn)
         identifier_result = self.google_api_data.get_placeid_from_address('rueopenClassRooms')
-        assert identifier_expected == identifier_result
+        assert mock_result == identifier_result
 
         identifier_expected = {
             'candidates' : [],
@@ -41,7 +41,7 @@ class TestGoogleApi:
         monkeypatch.setattr(requests, 'get', mockreturn)
         identifier_result =\
             self.google_api_data.get_placeid_from_address('openClassrooms')
-        assert identifier_expected == identifier_result
+        assert mock_result == identifier_result
 
     def test_geolocated_api_address(self, monkeypatch):
         address_api_expected = {
@@ -60,7 +60,7 @@ class TestGoogleApi:
         monkeypatch.setattr(requests, 'get', mockreturn)
         address_api_result =\
             self.google_api_data.get_address_api_from_placeid('ChIJIZX8lhRu5kcRGwYk8Ce3Vc8')
-        assert address_api_expected == address_api_result
+        assert mock_result == address_api_result
 
         address_api_expected = {
            'error_message' : 'This API key is not authorized to use this service or API.',
@@ -72,7 +72,7 @@ class TestGoogleApi:
         monkeypatch.setattr(requests, 'get', mockreturn)
         address_api_result =\
             self.google_api_data.get_address_api_from_placeid('ChIJIZX8lhRu5kcRGwYk8Ce3Vc8')
-        assert address_api_expected == address_api_result
+        assert mock_result == address_api_result
 
         address_api_expected = {
            'html_attributions': [],
@@ -83,7 +83,7 @@ class TestGoogleApi:
         monkeypatch.setattr(requests, 'get', mockreturn)
         address_api_result =\
             self.google_api_data.get_address_api_from_placeid('ChIJky12Zn3p9EcREQI4zzdgzbk')
-        assert address_api_expected == address_api_result
+        assert mock_result == address_api_result
 
 
 
